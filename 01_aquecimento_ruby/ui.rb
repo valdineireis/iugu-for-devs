@@ -1,7 +1,8 @@
 REGISTER = 1
 VIEW     = 2
 SEARCH   = 3
-EXIT     = 4
+CHECK    = 4
+EXIT     = 9
 
 def welcome
     'Bem-vindo ao Diário de Estudos, seu companheiro para estudar!'
@@ -12,6 +13,7 @@ def show_menu
     puts "[#{REGISTER}] Cadastrar um item para estudar"
     puts "[#{VIEW}] Ver todos os itens cadastrados"
     puts "[#{SEARCH}] Buscar um item de estudo"
+    puts "[#{CHECK}] Marcar/Desmarcar um item"
     puts "[#{EXIT}] Sair"
     print 'Escolha uma opção: '
     gets.to_i
@@ -30,6 +32,11 @@ end
 def request_word_to_search
     print 'Digite uma palavra para procurar: '
     gets.chomp
+end
+
+def request_item_id
+    print 'Informe o ID do item: '
+    gets.to_i
 end
 
 def notify_success_registration(study_item)

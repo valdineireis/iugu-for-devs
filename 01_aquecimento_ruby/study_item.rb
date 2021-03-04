@@ -1,5 +1,5 @@
 class StudyItem
-    attr_reader :id, :title, :category
+    attr_reader :id, :title, :category, :is_checked
 
     @@next_id = 1
     @@study_items = []
@@ -8,6 +8,7 @@ class StudyItem
         @id = @@next_id
         @title = title
         @category = category
+        @is_checked = false
 
         @@next_id += 1
         @@study_items << self
@@ -21,11 +22,19 @@ class StudyItem
         @@study_items.filter { |item| item.include?(term) }
     end
 
+    def self.get(id)
+        @@study_items.detect { |item| item.id == id }
+    end
+
+    def check
+        @is_checked = !@is_checked
+    end
+
     def include?(query)
         title.include?(query) || category.include?(query)
     end
 
     def to_s
-        "##{id} - #{title} - #{category}"
+        "[#{is_checked ? 'X' : ' '}] ##{id} - #{title} - #{category}"
     end
 end

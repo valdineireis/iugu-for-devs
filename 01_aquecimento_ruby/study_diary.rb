@@ -1,6 +1,20 @@
 require_relative 'ui'
 require_relative 'study_item'
 
+def show_items
+  study_items = StudyItem.all
+  print_items_and_notify_if_empty(study_items)
+end
+
+def check_item(items)
+  return if items.empty?
+  item_id = request_item_id
+  clear
+  item = StudyItem.get(item_id)
+  item.check if item
+  show_items
+end
+
 def start
   clear
   puts welcome
@@ -14,13 +28,16 @@ def start
       item = StudyItem.new(title: data[:title], category: data[:category])
       notify_success_registration(item)
     when VIEW
-      study_items = StudyItem.all
-      print_items_and_notify_if_empty(study_items)
+      show_items
     when SEARCH
       term = request_word_to_search
       clear
       found_items = StudyItem.search(term)
       print_items_and_notify_if_empty(found_items)
+    when CHECK
+      study_items = StudyItem.all
+      print_items_and_notify_if_empty(study_items)
+      check_item(study_items)
     when EXIT
       say_thanks
       break
