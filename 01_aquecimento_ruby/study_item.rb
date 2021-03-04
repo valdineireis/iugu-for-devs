@@ -1,5 +1,4 @@
 class StudyItem
-
     attr_reader :id, :title, :category
 
     @@next_id = 1
@@ -18,12 +17,12 @@ class StudyItem
         @@study_items
     end
 
-    def include?(query)
-        title.include?(query) || category.include?(query)
-    end
-
     def self.search(term)
         @@study_items.filter { |item| item.include?(term) }
+    end
+
+    def include?(query)
+        title.include?(query) || category.include?(query)
     end
 
     def to_s

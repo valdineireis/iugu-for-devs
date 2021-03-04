@@ -27,6 +27,11 @@ def request_new_study_item
     { title: title, category: category }
 end
 
+def request_word_to_search
+    print 'Digite uma palavra para procurar: '
+    gets.chomp
+end
+
 def notify_success_registration(study_item)
     puts "Item '#{study_item.title}' da categoria '#{study_item.category}' cadastrado com sucesso!"
 end
@@ -39,19 +44,19 @@ def say_invalid_option
     puts 'Opção inválida'
 end
 
-def notify_if_empty(collection)
-    puts 'Nenhum item encontrado' if collection.empty?
-end
-
-def request_word_to_search
-    print 'Digite uma palavra para procurar: '
-    gets.chomp
-end
-
 def print_items(collection)
     collection.each do |item|
         puts item
     end
+end
+
+def notify_if_empty(collection)
+    puts 'Nenhum item encontrado' if collection.empty?
+end
+
+def print_items_and_notify_if_empty(collection)
+    print_items(collection)
+    notify_if_empty(collection)
 end
 
 def clear
