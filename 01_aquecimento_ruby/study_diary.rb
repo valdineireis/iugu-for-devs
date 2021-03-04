@@ -6,12 +6,12 @@ def show_items
   print_items_and_notify_if_empty(study_items)
 end
 
-def check_item(items)
+def check_uncheck_item(items)
   return if items.empty?
   item_id = request_item_id
   clear
   item = StudyItem.get(item_id)
-  item.check if item
+  item.check_uncheck if item
   show_items
 end
 
@@ -37,7 +37,7 @@ def start
     when CHECK
       study_items = StudyItem.all
       print_items_and_notify_if_empty(study_items)
-      check_item(study_items)
+      check_uncheck_item(study_items)
     when EXIT
       say_thanks
       break

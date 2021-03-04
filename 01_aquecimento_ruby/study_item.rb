@@ -26,7 +26,7 @@ class StudyItem
         @@study_items.detect { |item| item.id == id }
     end
 
-    def check
+    def check_uncheck
         @is_checked = !@is_checked
     end
 
@@ -35,6 +35,6 @@ class StudyItem
     end
 
     def to_s
-        "[#{is_checked ? 'X' : ' '}] ##{id} - #{title} - #{category}"
+        "##{id} - #{title} - #{category}"
     end
 end
