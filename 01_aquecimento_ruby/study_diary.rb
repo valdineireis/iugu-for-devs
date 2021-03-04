@@ -1,49 +1,32 @@
-def welcome
-  'Bem-vindo ao Diário de Estudos, seu companheiro para estudar!'
-end
-
-def menu
-  puts "[1] Cadastrar um item para estudar"
-  puts "[2] Ver todos os itens cadastrados"
-  puts "[3] Buscar um item de estudo"
-  puts "[4] Sair"
-  print 'Escolha uma opção: '
-  gets.to_i
-end
-
-def register_study_item
-  print 'Digite o título do seu item de estudo: '
-  title = gets.chomp
-  print 'Digite a categoria do seu item de estudo: '
-  category = gets.chomp
-  puts "Item '#{title}' da categoria '#{category}' cadastrado com sucesso!"
-  { title: title, category: category }
-end
+require_relative 'ui'
+require_relative 'study_item'
 
 puts welcome
-study_items = []
-option = menu
+option = show_menu
+clear
 
-while option != 4
-  if option == 1
-    study_items << register_study_item
-  elsif option == 2
-    study_items.each_with_index do |item, index|
-      puts "##{index + 1} - #{item[:title]} - #{item[:category]}"
-    end
-    puts 'Nenhum item cadastrado' if study_items.empty?
-  elsif option == 3
-    print 'Digite uma palavra para procurar: '
-    term = gets.chomp
-    found_items = study_items.filter do |item|
-      item[:title].include? term
-    end
-    puts found_items
-    puts 'Nenhum item encontrado' if found_items.empty?
+loop do
+  case option
+  when REGISTER
+    data = request_new_study_item
+    item = StudyItem.new(title: data[:title], category: data[:category])
+    notify_success_registration(item)
+  when VIEW
+    study_items = StudyItem.all
+    print_items(study_items)
+    notify_if_empty(study_items)
+  when SEARCH
+    term = request_word_to_search
+    clear
+    found_items = StudyItem.search(term)
+    print_items(found_items)
+    notify_if_empty(found_items)
+  when EXIT
+    say_thanks
+    break
   else
-    puts 'Opção inválida'
+    say_invalid_option
   end
-  option = menu
+  option = show_menu
+  clear
 end
-
-puts 'Obrigado por usar o Diário de Estudos'  
