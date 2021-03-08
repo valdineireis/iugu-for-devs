@@ -53,7 +53,7 @@ end
 
 def print_items(collection)
     collection.each do |item|
-        puts "[#{item.is_checked ? 'X' : ' '}] #{item}"
+        puts "[#{item.is_checked == 1 ? 'X' : ' '}] #{item}"
     end
 end
 

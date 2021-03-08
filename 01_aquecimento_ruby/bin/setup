@@ -1,0 +1,42 @@
+#!/usr/bin/env ruby
+require 'sqlite3'
+require 'fileutils'
+include FileUtils
+
+# path to your application root.
+APP_ROOT = File.expand_path('..', __dir__)
+
+def system!(*args)
+    system(*args) || abort("\n== Command #{args} failed ==")
+end
+
+chdir APP_ROOT do
+    puts '== Instalando dependências =='
+    system! 'gem install bundler --conservative'
+    system('bundle check') || system('bundle install')
+
+    puts "\n== Criando o banco de dados =="
+    puts "\n"
+
+    # system! 'config/database.config'
+    begin
+        db = SQLite3::Database.open "db/study_diary.db"
+        db.execute <<-SQL 
+            CREATE TABLE IF NOT EXISTS Study_Items(
+                ID INTEGER PRIMARY KEY AUTOINCREMENT,
+                TITLE VARCHAR(100),
+                CATEGORY VARCHAR(100),
+                IS_CHECKED BOOLEAN
+            );
+        SQL
+    rescue SQLite3::Exception => e
+        puts "Ocorreu um erro"
+        puts e
+    rescue
+        db.close if db
+    end
+
+    puts 'Banco de dados configurado com sucesso!'
+
+    puts "\n== Você está pronto para começar =="
+end

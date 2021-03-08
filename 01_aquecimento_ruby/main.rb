@@ -1,3 +1,3 @@
-require_relative 'study_diary'
+require_relative 'lib/study_diary'
 
 start

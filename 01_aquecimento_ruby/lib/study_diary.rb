@@ -10,7 +10,7 @@ def check_uncheck_item(items)
   return if items.empty?
   item_id = request_item_id
   clear
-  item = StudyItem.get(item_id)
+  item = StudyItem.find(item_id)
   item.check_uncheck if item
   show_items
 end
@@ -25,7 +25,7 @@ def start
     case option
     when REGISTER
       data = request_new_study_item
-      item = StudyItem.new(title: data[:title], category: data[:category])
+      item = StudyItem.register(title: data[:title], category: data[:category])
       notify_success_registration(item)
     when VIEW
       show_items
