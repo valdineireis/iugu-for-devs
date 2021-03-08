@@ -21,5 +21,3 @@ ruby main.rb
 [X] Refatoração do código<br>
 [X] Marcar/Desmarcar item<br>
 [X] Armazenar os dados em Arquivo ou Banco de Dados.
-
-_[ Em Desenvolvimento ]_
